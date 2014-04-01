@@ -47,12 +47,14 @@ GameManager.prototype.setup = function () {
     this.over        = previousState.over;
     this.won         = previousState.won;
     this.keepPlaying = previousState.keepPlaying;
+    this.bombed      = previousState.bombed;
   } else {
     this.grid        = new Grid(this.size);
     this.score       = 0;
     this.over        = false;
     this.won         = false;
     this.keepPlaying = false;
+    this.bombed      = false;
 
     // Add the initial tiles
     this.addStartTiles();
@@ -73,11 +75,25 @@ GameManager.prototype.addStartTiles = function () {
 GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
     var value = Math.random() < 0.9 ? 2 : 4;
-    var tile = new Tile(this.grid.randomAvailableCell(), value);
+    var bomb = Math.random() < 0.2 ? true : false;
+    if (bomb) {
+      var oThis = this;
+      bomb = window.setTimeout(function () {
+          oThis.boom(tile);
+        },
+        10000);
+    }
+    var tile = new Tile(this.grid.randomAvailableCell(), value, bomb);
 
     this.grid.insertTile(tile);
   }
 };
+
+GameManager.prototype.boom = function() {
+  this.over = true;
+  this.bombed = true;
+  this.actuate();
+}
 
 // Sends the updated grid to the actuator
 GameManager.prototype.actuate = function () {
@@ -97,7 +113,8 @@ GameManager.prototype.actuate = function () {
     over:       this.over,
     won:        this.won,
     bestScore:  this.storageManager.getBestScore(),
-    terminated: this.isGameTerminated()
+    terminated: this.isGameTerminated(),
+    bombed:     this.bombed
   });
 
 };
@@ -109,7 +126,8 @@ GameManager.prototype.serialize = function () {
     score:       this.score,
     over:        this.over,
     won:         this.won,
-    keepPlaying: this.keepPlaying
+    keepPlaying: this.keepPlaying,
+    bombed:      this.bombed
   };
 };
 
@@ -129,6 +147,14 @@ GameManager.prototype.moveTile = function (tile, cell) {
   this.grid.cells[cell.x][cell.y] = tile;
   tile.updatePosition(cell);
 };
+
+GameManager.prototype.defuse = function (tiles) {
+  tiles.forEach(function (tile) {
+    if (tile.bomb) {
+      window.clearTimeout(tile.bomb);
+    }
+  });
+}
 
 // Move tiles on the grid in the specified direction
 GameManager.prototype.move = function (direction) {
@@ -158,7 +184,8 @@ GameManager.prototype.move = function (direction) {
 
         // Only one merger per row traversal?
         if (next && next.value === tile.value && !next.mergedFrom) {
-          var merged = new Tile(positions.next, tile.value * 2);
+          self.defuse([next, tile]);
+          var merged = new Tile(positions.next, tile.value * 2, false);
           merged.mergedFrom = [tile, next];
 
           self.grid.insertTile(merged);
