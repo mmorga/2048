@@ -709,3 +709,156 @@ hr {
     margin-top: 90px !important; }
   .game-message .lower {
     margin-top: 30px !important; } }
+.tile.bomb .tile-inner {
+  color: red;
+  background-color: black;
+  background-image: url("../images/bomb.png");
+  background-size: 100% 100%;
+  -webkit-animation: bomb-flash 10s linear;
+  -moz-animation: bomb-flash 10s linear;
+  animation: bomb-flash 10s linear; }
+
+@-webkit-keyframes bomb-flash {
+  0% {
+    background-color: #000000;
+    color: white; }
+
+  10% {
+    background-color: #ff0000; }
+
+  20% {
+    background-color: #000000; }
+
+  30% {
+    background-color: #ff0000; }
+
+  40% {
+    background-color: #000000; }
+
+  50% {
+    background-color: #ff0000; }
+
+  60% {
+    background-color: #000000; }
+
+  65% {
+    background-color: #ff0000; }
+
+  70% {
+    background-color: #000000; }
+
+  75% {
+    background-color: #ff0000; }
+
+  80% {
+    background-color: #000000; }
+
+  85% {
+    background-color: #ff0000; }
+
+  90% {
+    background-color: #000000; }
+
+  95% {
+    background-color: #ff0000;
+    color: white; }
+
+  100% {
+    background-color: #ffffff;
+    color: yellow; } }
+@-moz-keyframes bomb-flash {
+  0% {
+    background-color: #000000;
+    color: white; }
+
+  10% {
+    background-color: #ff0000; }
+
+  20% {
+    background-color: #000000; }
+
+  30% {
+    background-color: #ff0000; }
+
+  40% {
+    background-color: #000000; }
+
+  50% {
+    background-color: #ff0000; }
+
+  60% {
+    background-color: #000000; }
+
+  65% {
+    background-color: #ff0000; }
+
+  70% {
+    background-color: #000000; }
+
+  75% {
+    background-color: #ff0000; }
+
+  80% {
+    background-color: #000000; }
+
+  85% {
+    background-color: #ff0000; }
+
+  90% {
+    background-color: #000000; }
+
+  95% {
+    background-color: #ff0000;
+    color: white; }
+
+  100% {
+    background-color: #ffffff;
+    color: yellow; } }
+@keyframes bomb-flash {
+  0% {
+    background-color: #000000;
+    color: white; }
+
+  10% {
+    background-color: #ff0000; }
+
+  20% {
+    background-color: #000000; }
+
+  30% {
+    background-color: #ff0000; }
+
+  40% {
+    background-color: #000000; }
+
+  50% {
+    background-color: #ff0000; }
+
+  60% {
+    background-color: #000000; }
+
+  65% {
+    background-color: #ff0000; }
+
+  70% {
+    background-color: #000000; }
+
+  75% {
+    background-color: #ff0000; }
+
+  80% {
+    background-color: #000000; }
+
+  85% {
+    background-color: #ff0000; }
+
+  90% {
+    background-color: #000000; }
+
+  95% {
+    background-color: #ff0000;
+    color: white; }
+
+  100% {
+    background-color: #ffffff;
+    color: yellow; } }
